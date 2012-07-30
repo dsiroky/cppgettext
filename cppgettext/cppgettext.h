@@ -13,6 +13,11 @@
 //##########################################################################
 //##########################################################################
 
+char *gettext(const char *msgid);
+
+//##########################################################################
+//##########################################################################
+
 class Translations
 {
   public:
@@ -22,7 +27,8 @@ class Translations
     Translations();
     virtual ~Translations();
     void set_fallback(Translations *tr_fallback);
-    const std::string &gettext(const std::string &original);
+    virtual char *gettext(const char *original);
+    void install();
 };
 
 #endif

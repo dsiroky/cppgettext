@@ -6,6 +6,22 @@
 #include "cppgettext.h"
 
 //######################################################################
+//######################################################################
+
+Translations *g_installed_translations = NULL;
+
+//######################################################################
+//######################################################################
+
+char *gettext(const char *msgid)
+{
+  if (g_installed_translations != NULL)
+    return g_installed_translations->gettext(msgid);
+  return (char *)msgid;
+}
+
+//######################################################################
+//######################################################################
 
 Translations::Translations()
 {
@@ -17,6 +33,9 @@ Translations::Translations()
 Translations::~Translations()
 {
   fallback = NULL;
+  // reset global gettext() function
+  if (g_installed_translations == this)
+    g_installed_translations = NULL;
 }
 
 //######################################################################
@@ -28,15 +47,23 @@ void Translations::set_fallback(Translations *tr_fallback)
 
 //######################################################################
 
-const std::string &Translations::gettext(const std::string &original)
+char *Translations::gettext(const char *original)
 {
-  auto it = parser.translation_map.find(original);
+  auto it = parser.translation_map.find(std::string(original));
   if (it == parser.translation_map.end())
   {
     if (fallback != NULL)
       return fallback->gettext(original);
     else
-      return original;
+      return (char *)original;
   }
-  return it->second;
+  return (char *)it->second.c_str();
+}
+
+//######################################################################
+
+/// "redirect" global gettext() function to this class
+void Translations::install()
+{
+  g_installed_translations = this;
 }
