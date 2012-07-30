@@ -13,7 +13,7 @@ Translations *g_installed_translations = NULL;
 //######################################################################
 //######################################################################
 
-char *gettext(const char *msgid)
+char *cppgettext(const char *msgid)
 {
   if (g_installed_translations != NULL)
     return g_installed_translations->gettext(msgid);

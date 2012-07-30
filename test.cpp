@@ -3,7 +3,7 @@
 
 #include "cppgettext/cppgettext.h"
 
-#define _(msg) gettext(msg)
+#define _(msg) cppgettext(msg)
 
 int main()
 {
@@ -17,9 +17,9 @@ int main()
   std::cout << c.gettext("not translated") << std::endl;
 
   std::cout << std::endl;
-  std::cout << gettext("hello original") << std::endl;
+  std::cout << cppgettext("hello original") << std::endl;
   c.install();
-  std::cout << gettext("hello original") << std::endl;
+  std::cout << cppgettext("hello original") << std::endl;
   std::cout << _("hello original") << std::endl;
 
   return 0;
