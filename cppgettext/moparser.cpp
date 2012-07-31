@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 #include <memory>
+#include <stdint.h>
 
 #include "moparser.h"
 
